@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  duckdb:
+    image: davidgasquez/duckdb
+    volumes:
+      - ./db-data:/data
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd data
+        duckdb
+        # Enter the DuckDB shell and execute the query
+        echo "SELECT * FROM \"sample1.parquet\";" | duckdb
+        sleep 10000
+#   frontend:
+#     build: ./frontend
+#     ports:
+#       - "3000:80"
+#     depends_on:
+#       - backend
+
+#   backend:
+#     build: ./backend
+#     ports:
+#       - "5000:5000"
+#     environment:
+#       - DB_HOST=duckdb
+#     depends_on:
+#       - duckdb
+
+volumes:
+  db-data:
