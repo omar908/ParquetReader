@@ -14,6 +14,7 @@ const FileUpload: React.FC = () => {
       console.log('No file selected');
       return;
     }
+    // TODO add validation checks to make sure file type is parquet.
 
     console.log(`fileName: ${file.name}; fileSize: ${file.size}`)
     const formData = new FormData();
