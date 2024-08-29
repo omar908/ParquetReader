@@ -20,5 +20,7 @@ ENV PATH /opt/conda/envs/ParquetReader/bin:$PATH
 # Copy your application code
 COPY . .
 
+EXPOSE 5000
+
 # Run main python script
-CMD ["python", "main.py"]
+CMD ["flask", "--app", "main.py", "run", "--host=0.0.0.0"]
