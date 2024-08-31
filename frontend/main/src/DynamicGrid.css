@@ -1,0 +1,33 @@
+.grid-container {
+    display: grid;
+    gap: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .grid-header {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    background-color: #f0f0f0;
+    padding: 8px;
+  }
+  
+  .grid-header-item {
+    font-weight: bold;
+    padding: 4px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .grid-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    padding: 8px;
+  }
+  
+  .grid-item {
+    padding: 4px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  

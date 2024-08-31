@@ -1,7 +1,11 @@
 import React, { useState, ChangeEvent } from 'react';
 
+type ChildComponentProps = {
+  jsonToGridFunction: (parquetFileData: Array<Record<string, string>>) => void; // Defining the type of the function prop
+};
+
 // TODO improve file input, visually and capability (e.g. support drag and drop)
-const FileUpload: React.FC = () => {
+const FileUpload: React.FC<ChildComponentProps> = ({ jsonToGridFunction }) => {
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +33,7 @@ const FileUpload: React.FC = () => {
       });
       const result = await response.json();
       console.log('Success:', result);
+      jsonToGridFunction(result)
     } catch (error) {
       console.error('Error:', error);
     }
