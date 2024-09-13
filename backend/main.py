@@ -1,7 +1,6 @@
 import os
 import logging
 import duckdb
-# import pandas as pd
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
