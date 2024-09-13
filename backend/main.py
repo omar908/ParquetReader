@@ -21,6 +21,22 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/file/parquet", methods=['GET'])
+def get_uploaded_parquet_list():
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        logger.debug('Upload Directory does not exist, no files uploaded')
+        return jsonify({'error': 'No files have been yet uploaded'}), 404
+    
+    try:
+        list_of_files = os.listdir(app.config['UPLOAD_FOLDER'])
+        logger.debug(f"List of files within {app.config['UPLOAD_FOLDER']}, are {list_of_files}, with a size of {len(list_of_files)}")
+        if len(list_of_files) == 0:
+            return jsonify({'error': 'No files have been yet uploaded'}), 404
+        return jsonify(list_of_files)
+    except Exception as e:
+        logger.error(f"Error accessing files: {str(e)}")
+        return jsonify({'error': 'Unable to access files'}), 500
+
 @app.route("/file/parquet/sample", methods=['GET'])
 def get_sample_data():
     # Connect to DuckDB
