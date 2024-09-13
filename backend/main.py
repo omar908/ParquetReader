@@ -32,7 +32,9 @@ def get_uploaded_parquet_list():
         logger.debug(f"List of files within {app.config['UPLOAD_FOLDER']}, are {list_of_files}, with a size of {len(list_of_files)}")
         if len(list_of_files) == 0:
             return jsonify({'error': 'No files have been yet uploaded'}), 404
-        return jsonify(list_of_files)
+        filtered_files = [fileName for fileName in list_of_files if allowed_file(fileName)]
+        logger.debug(f"Filtered list {filtered_files}, with a size of {len(filtered_files)}")
+        return jsonify(filtered_files)
     except Exception as e:
         logger.error(f"Error accessing files: {str(e)}")
         return jsonify({'error': 'Unable to access files'}), 500
