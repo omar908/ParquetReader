@@ -24,6 +24,20 @@ function App() {
     }
   }, [files]);
 
+  // Function to handle submitting the selected file from the modal
+  const handleFileSubmit = async (selectedFile: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/file/parquet?filename=${selectedFile}`, {
+        method: 'GET',
+      });
+      const result = await response.json();
+      setData(result); // Update data to display in DynamicGrid
+      setModalVisible(false);
+    } catch (error) {
+      console.error('Error fetching file data:', error);
+    }
+  };
+
   return (
     <>
       <h1>Parquet Reader</h1>
@@ -32,7 +46,7 @@ function App() {
       <button onClick={viewUploadedParquetFiles} disabled={isLoading}>
         {isLoading ? 'Loading...' : 'Uploaded Files'}
       </button>
-      {modalVisible && <FileSelectModal files={files} onCancel={() => setModalVisible(false)} onSubmit={ () => console.log(' placeholder submitted')} />}
+      {modalVisible && <FileSelectModal files={files} onCancel={() => setModalVisible(false)} onSubmit={handleFileSubmit}/>}
       {error && <p>Error: {error}</p>}
 
       <h2>Upload new file?</h2>
