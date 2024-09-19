@@ -32,6 +32,13 @@ function App() {
       const response = await fetch(`${baseUrl}/file/parquet?filename=${selectedFile}`, {
         method: 'GET',
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log(`Error ${response.status}: ${errorText}`);
+        return;
+      }
+
       const result = await response.json();
       setData(result); // Update data to display in DynamicGrid
       setModalVisible(false);

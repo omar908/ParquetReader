@@ -11,7 +11,9 @@ const useFileList = (baseUrl: string) => {
       try {
         const response = await fetch(`${baseUrl}/file/parquet/list`, { method: 'GET' });
         if (!response.ok) {
-            console.log('Error: ' + response.json.toString)
+          const errorText = await response.text();
+          console.log(`Error ${response.status}: ${errorText}`);
+          return;
         }
         const result = await response.json();
         setFiles(result);

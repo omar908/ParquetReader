@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 
 type ChildComponentProps = {
-  jsonToGridFunction: (parquetFileData: Array<Record<string, string>>) => void; // Defining the type of the function prop
+  jsonToGridFunction: (parquetFileData: Array<Record<string, string>>) => void;
   url: string;
 };
 
@@ -30,11 +30,17 @@ const FileUpload: React.FC<ChildComponentProps> = ({ jsonToGridFunction, url}) =
     formData.append('file', file);
 
     try {
-    // TODO Add better error handling
       const response = await fetch(`${url}/file/parquet`, {
         method: 'POST',
         body: formData,
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.log(`Error ${response.status}: ${errorText}`);
+        return;
+      }
+
       const result = await response.json();
       console.log('Success:', result);
       jsonToGridFunction(result)
