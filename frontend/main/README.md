@@ -50,8 +50,10 @@ export default tseslint.config({
 ```
 # Dockerfile Hints
 
-## To build image from Dockerfile and add a `Tag` to it called my-react-vite-app-v1`
-`docker build -t my-react-vite-app-v1 .`
+>Note: `Dockerfile` is used for `docker-compose.yaml`
+
+## To build image from Dockerfile.standalone and add a `Tag` to it called my-react-vite-app-v1`
+`docker build -f Dockerfile.standalone -t my-react-vite-app-v1 .`
 
 ## To create a container based upon the created docker image and expose port 80 to local machine
 `docker run -p 80:80 my-react-vite-app-v1`
