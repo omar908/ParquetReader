@@ -1,16 +1,15 @@
 import { useState } from 'react';
 
-const useFileList = () => {
+const useFileList = (baseUrl: string) => {
     const [files, setFiles] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
   
     const fetchFileList = async () => {
-      setIsLoading(true); // Set loading to true before fetching
+      setIsLoading(true);
       setError(null);
       try {
-        //TODO update localhost to correct URL
-        const response = await fetch('http://localhost:5000/file/parquet/list', { method: 'GET' });
+        const response = await fetch(`${baseUrl}/file/parquet/list`, { method: 'GET' });
         if (!response.ok) {
             console.log('Error: ' + response.json.toString)
         }
@@ -19,7 +18,7 @@ const useFileList = () => {
       } catch (err: any) {
         setError(err.message);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching
+        setIsLoading(false);
       }
     };
   

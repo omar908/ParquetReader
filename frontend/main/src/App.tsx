@@ -7,10 +7,12 @@ import FileSelectModal from './FileSelectModal.tsx'
 
 function App() {
 
+  const baseUrl: string = import.meta.env.VITE_BACKEND_API_URL;
+
   const initialData = [{}];
   const [data, setData] = useState<Array<Record<string, string>>>(initialData);
 
-  const { files, fetchFileList, isLoading, error } = useFileList();
+  const { files, fetchFileList, isLoading, error } = useFileList(baseUrl);
   const [modalVisible, setModalVisible] = useState(false);
 
   const viewUploadedParquetFiles = async () => {
@@ -27,7 +29,7 @@ function App() {
   // Function to handle submitting the selected file from the modal
   const handleFileSubmit = async (selectedFile: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/file/parquet?filename=${selectedFile}`, {
+      const response = await fetch(`${baseUrl}/file/parquet?filename=${selectedFile}`, {
         method: 'GET',
       });
       const result = await response.json();
@@ -51,7 +53,7 @@ function App() {
 
       <h2>Upload new file?</h2>
       <p>Select a file and upload to Display details on UI.</p>
-      <FileUpload jsonToGridFunction={setData}/>
+      <FileUpload jsonToGridFunction={setData} url={baseUrl}/>
       <br></br>
       <h2>Parquet Details</h2>
       <DynamicGrid data={data}/>
