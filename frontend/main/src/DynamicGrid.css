@@ -9,7 +9,7 @@
   .grid-header {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    background-color: #f0f0f0;
+    background-color: #888;
     padding: 8px;
   }
   
