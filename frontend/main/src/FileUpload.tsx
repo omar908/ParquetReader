@@ -20,10 +20,10 @@ const FileUpload: React.FC<ChildComponentProps> = ({ jsonToGridFunction, url}) =
       return;
     }
 
-    // if (file.name != null && !file.name.endsWith('.parquet')){
-    //   console.log('Invalid File Type')
-    //   return;
-    // }
+    if (file.name != null && !file.name.endsWith('.parquet')){
+      console.log('Invalid File Type')
+      return;
+    }
 
     console.log(`fileName: ${file.name}; fileSize: ${file.size}`)
     const formData = new FormData();
