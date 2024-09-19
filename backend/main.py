@@ -72,17 +72,21 @@ def get_sample_data():
 
 @app.route("/file/parquet", methods=['POST'])
 def convert_parquet_to_json():
-    logger.debug("Handling POST request for /file/parquet")
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file attached to request'}), 400
+    try:
+        logger.debug("Handling POST request for /file/parquet")
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file attached to request'}), 400
 
-    file = request.files['file']
+        file = request.files['file']
 
-    logger.debug(f"Validating file.filename: {file.filename}")
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-    
-    if file and allowed_file(file.filename):
+        logger.debug(f"Validating file.filename: {file.filename}")
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+        
+
+        if not allowed_file(file.filename):
+            return jsonify({'error': 'Invalid File Type'}), 400
+
         filename = secure_filename(file.filename)
         if not os.path.exists(app.config['UPLOAD_FOLDER']):
             logger.debug("Creating Directory: " + app.config['UPLOAD_FOLDER'])
@@ -93,8 +97,9 @@ def convert_parquet_to_json():
 
         return get_parquet_file_content(filename, app.config['UPLOAD_FOLDER'])
 
-    logger.error('Something failed during file processing')
-    return jsonify({'error': 'Oops, something failed... Sorry!'}), 500
+    except Exception as e:
+        logger.error(f'Something failed during file processing: {str(e)}')
+        return jsonify({'error': 'Oops, something failed... Sorry!'}), 500
 
 def trim_and_check_if_blank(string):
     # Check if string is None
