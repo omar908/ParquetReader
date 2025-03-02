@@ -1,6 +1,6 @@
 # Parquet Reader Application
 
-This application consists of a backend built with Pyton, Flask, DuckDB. Also a frontend built with React, TypeScript, and Vite. 
+This application consists of a backend built with Python, Flask, DuckDB. Also a frontend built with React, TypeScript, and Vite. 
 
 
 ## Features
